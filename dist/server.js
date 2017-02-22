@@ -24,26 +24,20 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = require('react-router');
-
-var _reactRouter2 = _interopRequireDefault(_reactRouter);
-
 var _App = require('./components/App');
 
 var _App2 = _interopRequireDefault(_App);
 
-var _routes = require('./components/routes');
-
-var _routes2 = _interopRequireDefault(_routes);
+var _reactRouterDom = require('react-router-dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // set up express app
-
-// var pg = require('pg');
 var app = (0, _express2.default)();
 
 // set the port
+
+// var pg = require('pg');
 app.set('port', process.env.PORT || 1337);
 
 // allow cross origin resource sharing
@@ -62,14 +56,17 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // server side render the App
-var renderedApp = _server2.default.renderToString(_react2.default.createElement(_App2.default, null));
+
 
 // render index page on GET request to '/'
-app.get('/', function (request, response) {
-  _reactRouter2.default.run(_routes2.default, req.url, function (Handler) {
-    var content = _react2.default.renderToString(_react2.default.createElement(Handler, null));
-    res.render('pages/index', { body: content });
-  });
+app.get('*', function (request, response) {
+  var context = {};
+  var renderedApp = _server2.default.renderToString(_react2.default.createElement(
+    _reactRouterDom.StaticRouter,
+    { location: request.url, context: context },
+    _react2.default.createElement(_App2.default, null)
+  ));
+  response.render('pages/index', { route: request.params.path, body: renderedApp });
 });
 
 // // require the routes in our routes/index.js file

@@ -10,6 +10,16 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Main = require('./Main');
+
+var _Main2 = _interopRequireDefault(_Main);
+
+var _About = require('./About');
+
+var _About2 = _interopRequireDefault(_About);
+
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37,7 +47,14 @@ var App = function (_Component) {
           'p',
           null,
           'This is rendered by React.'
-        )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/about' },
+          'Click here to go to About page'
+        ),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Main2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _About2.default })
       );
     }
   }]);

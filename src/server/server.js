@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import ReactDOMServer from 'react-dom/server';
 import React from 'react';
 import App from './components/App';
-
+import { StaticRouter } from 'react-router-dom';
 
 // set up express app
 let app = express();
@@ -30,10 +30,16 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // server side render the App
-let renderedApp = ReactDOMServer.renderToString(<App/>);
+
 
 // render index page on GET request to '/'
-app.get('/', (request, response) => {
+app.get('*', (request, response) => {
+  let context = {};
+  let renderedApp = ReactDOMServer.renderToString(
+    <StaticRouter location={request.url} context={context}>
+      <App/>
+    </StaticRouter>
+  );
   response.render('pages/index', {route: request.params.path, body: renderedApp});
 });
 
