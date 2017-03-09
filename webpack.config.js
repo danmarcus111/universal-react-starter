@@ -9,32 +9,8 @@ const VENDOR_LIBS = [
 ];
 
 var path = require('path');
-// var serverConfig = {
-//   entry: {
-//     server: './src/server/server.js'
-//   },
-//   target: 'node',
-//   output: {
-//     path: path.resolve(__dirname, 'dist'),
-//     filename: '[name].js'
-//   },
-//   module: {
-//     rules: [
-//       {
-//         use: 'babel-loader',
-//         test: /\.js$/,
-//         exclude: /node_modules/
-//       }
-//     ]
-//   },
-//   plugins: [
-//     new webpack.DefinePlugin({
-//       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-//     })
-//   ]
-// };
 
-var clientConfig = {
+module.exports = {
   target: 'web', // <=== can be omitted as default is 'web'
   entry: {
     bundle: './src/client/index.js',
@@ -53,8 +29,7 @@ var clientConfig = {
       },
       {
         use: ['style-loader', 'css-loader'],
-        test: /\.css$/,
-        exclude: /node_modules/
+        test: /\.css$/
       }
     ]
   },
@@ -67,6 +42,3 @@ var clientConfig = {
     })
   ]
 };
-
-// module.exports = [ serverConfig, clientConfig ];
-module.exports = clientConfig;

@@ -1294,7 +1294,7 @@ var Main = function (_Component) {
       return _react2.default.createElement(
         'p',
         null,
-        'This was rendered by React because we are at location \'/about\'.'
+        'This was rendered by React because we are at location \'/about\'. It\'s true.'
       );
     }
   }]);
@@ -1345,7 +1345,7 @@ var Main = function (_Component) {
       return _react2.default.createElement(
         'p',
         null,
-        'This was rendered by React because we are at location \'/\'.'
+        'This was rendered by React because we are at location \'/\'.  '
       );
     }
   }]);

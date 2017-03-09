@@ -32,39 +32,27 @@ app.set('view engine', 'ejs');
 // server side render the App
 
 
-// render index page on GET request to '/'
-app.get('*', (request, response) => {
-  let context = {};
-  let renderedApp = ReactDOMServer.renderToString(
-    <StaticRouter location={request.url} context={context}>
-      <App/>
-    </StaticRouter>
-  );
-  response.render('pages/index', {route: request.params.path, body: renderedApp});
-});
-
 // // require the routes in our routes/index.js file
 // if (process.env.PORT) {
 //   require('./server/routes')(app);
 // };
+// routes for React App
+
+  // server side render the App
+  app.get('*', (request, response) => {
+    let context = {};
+    let body = ReactDOMServer.renderToString(
+      <StaticRouter location={request.url} context={context}>
+        <App/>
+      </StaticRouter>
+    );
+    let route = request.params.path;
+    response.render('pages/index', {route, body});
+  });
 
 // tell server to listen on port defined above
 app.listen(app.get('port'), () => {
   console.log('Node app is running on port', app.get('port'));
 });
-
-/*// use basic pg on GET request to '/'
-app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.render('pages/db', {results: result.rows} ); }
-    });
-  });
-});
-*/
 
 
