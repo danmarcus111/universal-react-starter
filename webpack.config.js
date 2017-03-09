@@ -11,7 +11,7 @@ const VENDOR_LIBS = [
 var path = require('path');
 
 module.exports = {
-  target: 'web', // <=== can be omitted as default is 'web'
+  target: 'web',
   entry: {
     bundle: './src/client/index.js',
     vendor: VENDOR_LIBS
