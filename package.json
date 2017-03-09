@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:clean && npm run build:client && npm run build:server",
     "build:clean": "rm -rf dist/components",
-    "build:client": "webpack",
+    "build:client": "NODE_ENV=production webpack -p",
     "build:server": "babel src/server -d dist && babel src/client/components -d dist/components",
     "start:dev": "watch 'npm run build:server' src",
     "start:server": "node dist/server"
@@ -19,7 +19,6 @@
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.1",
-    "nodemon": "^1.11.0",
     "style-loader": "^0.13.1",
     "watch": "^1.0.2",
     "webpack": "^2.2.1",
