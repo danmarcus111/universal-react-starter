@@ -17,7 +17,7 @@ module.exports = {
     vendor: VENDOR_LIBS
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'assets'),
     filename: '[name].js'
   },
   module: {

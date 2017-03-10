@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 // var pg = require('pg');
 import cors from 'cors';
 import logger from 'morgan';
@@ -7,6 +8,11 @@ import ReactDOMServer from 'react-dom/server';
 import React from 'react';
 import App from './components/App';
 import { StaticRouter } from 'react-router-dom';
+
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import reducers from './reducers';
 
 // set up express app
 let app = express();
@@ -23,7 +29,7 @@ app.use(bodyParser.json({strict: false}));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create static server
-app.use(express.static(__dirname));
+app.use(express.static(path.resolve(__dirname, 'assets')));
 
 // use ejs as view engine
 app.set('views', __dirname + '/views');
@@ -41,13 +47,25 @@ app.set('view engine', 'ejs');
   // server side render the App
   app.get('*', (request, response) => {
     let context = {};
+    
+    // testing preloading state in server render
+    let todos = [{
+      id: 0,
+      text: "test",
+      completed: false
+    }];
+    let injectedState = {todos};
+    let store = store = createStore(reducers, injectedState);
     let body = ReactDOMServer.renderToString(
-      <StaticRouter location={request.url} context={context}>
+      <Provider store={store}><StaticRouter location={request.url} context={context}>
         <App/>
-      </StaticRouter>
+      </StaticRouter></Provider>
     );
+    let preloadedState = store.getState();
     let route = request.params.path;
-    response.render('pages/index', {route, body});
+
+    preloadedState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
+    response.render('pages/index', {route, body, preloadedState});
   });
 
 // tell server to listen on port defined above

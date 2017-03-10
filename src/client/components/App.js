@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import Main from './Main';
 import About from './About';
 import {Route, Link} from 'react-router-dom';
+import { toggleTodo } from '../actions';
+import { connect } from 'react-redux';
 
+import '../styles/index.css';
 
 class App extends Component {
   render() {
@@ -15,4 +18,21 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(id))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

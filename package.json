@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:clean && npm run build:client && npm run build:server",
-    "build:clean": "rm -rf dist/components",
+    "build:clean": "rm -rf dist/components && rm -rf dist/reducers && rm -rf dist/actions",
     "build:client": "NODE_ENV=production webpack -p",
-    "build:server": "babel src/server -d dist && babel src/client/components -d dist/components",
+    "build:server": "babel src/server -d dist && babel src/client/components -d dist/components && babel src/client/reducers -d dist/reducers && babel src/client/actions -d dist/actions",
     "build:dev": "webpack --progress --watch",
     "serve:dev": "node dist/dev-server",
     "start:dev": "npm-run-all --parallel build:dev serve:dev",
