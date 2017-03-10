@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Test Page</title>
+  <link rel="stylesheet" href="./material.css">
+  <script src="./material.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -12,6 +15,11 @@
   <p>This is rendered by ejs.  Below this is the div with id of root. </p>
   <div class="container" id="root"><%- body %></div>
 </div>
+<script>
+  // WARNING: See the following for security issues around embedding JSON in HTML:
+  // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
+  window.__PRELOADED_STATE__ = '<%- preloadedState %>';
+</script>
 <script src="vendor.js"></script>
 <script src="bundle.js"></script>
 </body>
