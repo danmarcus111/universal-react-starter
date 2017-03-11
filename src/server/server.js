@@ -3,6 +3,7 @@ import path from 'path';
 // var pg = require('pg');
 import cors from 'cors';
 import logger from 'morgan';
+import compression from 'compression';
 import bodyParser from 'body-parser';
 import ReactDOMServer from 'react-dom/server';
 import React from 'react';
@@ -22,6 +23,7 @@ app.set('port', (process.env.PORT || 1337));
 
 // allow cross origin resource sharing
 app.use(cors());
+app.use(compression());
 
 // parse incoming requests data with body-parser
 // check out https://github.com/expressjs/body-parser for more details
