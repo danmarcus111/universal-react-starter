@@ -5,8 +5,6 @@ import {Route, Link} from 'react-router-dom';
 import { toggleTodo } from '../actions';
 import { connect } from 'react-redux';
 
-import '../styles/index.css';
-
 class App extends Component {
   render() {
     return (<div>
