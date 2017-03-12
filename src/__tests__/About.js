@@ -31,16 +31,18 @@ describe("About", () => {
   });
 
   it("always shallow renders", ()=>{
-    let renderedAbout = shallowRenderAbout();
-    expect(renderedAbout).toBeDefined();
+    let shallowRenderedAbout = shallowRenderAbout();
+    expect(shallowRenderedAbout).toBeDefined();
   });
 
   it("doesn't warn or send an error to console", ()=>{
+    renderAbout();
     expect(console.warn).toHaveBeenCalledTimes(0);
     expect(console.error).toHaveBeenCalledTimes(0);
   });
 
   it("doesn't log to console", ()=>{
+    renderAbout();
     expect(console.log).toHaveBeenCalledTimes(0);
   });
 
