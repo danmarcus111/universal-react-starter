@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Test Page</title>
-  <link rel="stylesheet" href="./material.css">
-  <script src="./material.js"></script>
+  <link rel="stylesheet" href="./material.min.css">
+  <script src="./material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
@@ -20,7 +20,7 @@
   // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
   window.__PRELOADED_STATE__ = '<%- preloadedState %>';
 </script>
-<script src="vendor.js"></script>
-<script src="bundle.js"></script>
+<script src="<%- vendor %>"></script>
+<script src="<%- bundle %>"></script>
 </body>
 </html>
