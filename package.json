@@ -5,23 +5,52 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:clean && npm run build:client && npm run build:server",
-    "build:clean": "rm -rf dist/components && rm -rf dist/reducers && rm -rf dist/actions",
-    "build:client": "NODE_ENV=production webpack -p",
+    "build:clean": "rm -rf dist/components && rm -rf dist/reducers && rm -rf dist/actions && npm run build:dev-clean",
+    "build:client": "NODE_ENV=production webpack -p --config webpack.config.prod.js",
     "build:server": "babel src/server -d dist && babel src/client/components -d dist/components && babel src/client/reducers -d dist/reducers && babel src/client/actions -d dist/actions",
-    "build:dev": "webpack --progress --watch",
+    "build:dev": "npm run build:dev-clean && webpack --progress --watch",
+    "build:dev-clean": "rm dist/assets/bundle*  && rm dist/assets/vendor*",
     "serve:dev": "node dist/dev-server",
-    "start:dev": "npm-run-all --parallel build:dev serve:dev",
-    "start:server": "node dist/server"
+    "dev": "npm-run-all --parallel build:dev serve:dev test:watch",
+    "start:server": "NODE_ENV=production node dist/server",
+    "test": "jest --verbose",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+    "setupFiles": [
+      "./jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ]
   },
   "author": "Dan Marcus",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
     "babel-loader": "^6.3.2",
+    "babel-plugin-transform-react-display-name": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.23.0",
+    "chunk-manifest-webpack-plugin": "^1.0.0",
     "css-loader": "^0.26.1",
+    "enzyme": "^2.7.1",
+    "enzyme-to-json": "^1.5.0",
+    "eslint": "^3.16.1",
+    "eslint-config-react-app": "^0.6.2",
+    "eslint-loader": "^1.6.3",
+    "eslint-plugin-flowtype": "^2.21.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.4.1",
+    "jest": "^19.0.2",
     "npm-run-all": "^4.0.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-test-renderer": "^15.4.2",
     "style-loader": "^0.13.1",
     "watch": "^1.0.2",
     "webpack": "^2.2.1",
@@ -29,6 +58,7 @@
   },
   "dependencies": {
     "body-parser": "^1.16.1",
+    "compression": "^1.6.2",
     "cors": "^2.8.1",
     "ejs": "^2.5.6",
     "express": "^4.14.1",
