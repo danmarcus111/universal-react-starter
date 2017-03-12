@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
 
 const VENDOR_LIBS = [
     "react",
@@ -15,7 +16,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist', 'assets'),
-    filename: '[name].js'
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [
@@ -38,6 +39,9 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
+    }),
+    new ChunkManifestPlugin({
+      filename: "chunk-manifest.json"
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)

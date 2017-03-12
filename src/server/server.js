@@ -15,6 +15,11 @@ import { Provider } from 'react-redux';
 
 import reducers from './reducers';
 
+// get json manifest file details so we can load the correct bundles
+var manifest = require(path.resolve(__dirname,'assets','chunk-manifest.json'));
+let match = manifest[0].match(/^\d+\.([\w]{2,})\.js$/i);
+let hash = match[1];
+
 // set up express app
 let app = express();
 
@@ -65,9 +70,11 @@ app.set('view engine', 'ejs');
     );
     let preloadedState = store.getState();
     let route = request.params.path;
+    let bundle = `bundle.${hash}.js`;
+    let vendor = `vendor.${hash}.js`;
 
     preloadedState = JSON.stringify(preloadedState).replace(/</g, '\\u003c');
-    response.render('pages/index', {route, body, preloadedState});
+    response.render('pages/index', {route, body, preloadedState, bundle, vendor});
   });
 
 // tell server to listen on port defined above
